@@ -168,13 +168,12 @@ api.scanAvailableNetwork = function () {
 
             if (nets.length === 0) {
                 rsp.code = WPAN_CODE.NetworkNotFound;
+                rsp.message = WPAN_MESSAGE[rsp.code];
             }
-
             return rsp;
         }).catch(() => {
             rsp.code = WPAN_CODE.SetGatewayFailed;
             rsp.message = WPAN_MESSAGE[rsp.code];
-
             return rsp;
         });
 };
@@ -361,7 +360,7 @@ function parseTable(lines) {
     //  lines[0]> | J | Network Name     | Extended PAN     | PAN  | MAC Address      | Ch | dBm | LQI |
     //  lines[1]> +---+------------------+------------------+------+------------------+----+-----+-----+
     //  lines[2]> | 0 | OpenThread       | dead00beef00cafe | ffff | f1d92a82c8d8fe43 | 11 | -20 |   0 |
-
+console.log(lines);
     let infoList = [];
     let fieldNames = parseTableFields(lines[0]);
 
