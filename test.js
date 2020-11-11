@@ -3,12 +3,13 @@ var ot = require('./index');
 
 //ot.readLine('factoryreset').then(() => console.log('reset'));
 
-//ot.readStatus()
-//ot.scanAvailableNetwork()
-ot.getWpanServiceStatus()
+ot.readStatus()
 //.then(data => console.log(data))
-
-//ot.readLines('networkdiagnostic get fd62:e632:a58f:1904:0:ff:fe00:fc00 0 1 6')
+//ot.scanAvailableNetwork()
+//.then(data => console.log(data))
+//ot.getWpanServiceStatus()
+.then(data => console.log(data))
+//ot.readLines('networkdiagnostic get fd11:1111:1122:0:0:ff:fe00:fc00 0 1 2 3 4 5 6')
 //ot.readLines('networkdiagnostic get ff02::1 0 1')
 /*
 .then(() => {
@@ -21,8 +22,11 @@ ot.getWpanServiceStatus()
     prefix: 'fd11:22::',
     passphrase: '654321',
   }, false);
-}).then(() => ot.readStatus())
+})
 */
-.then(data => console.log(data));
+//.then(() => ot.readStatus())
+
+//ot.readLines('state')
+//.then(data => console.log(data));
 
 

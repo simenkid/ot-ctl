@@ -1,0 +1,80 @@
+
+    enum Type
+    {
+        kExtMacAddress   = 0,  ///< Source Address TLV
+        kAddress16       = 1,  ///< Address16 TLV
+        kMode            = 2,  ///< Mode TLV
+        kTimeout         = 3,  ///< Timeout TLV
+        kConnectivity    = 4,  ///< Connectivity TLV
+        kRoute           = 5,  ///< Routing-Table TLV
+        kLeaderData      = 6,  ///< Leader Data TLV
+        kNetworkData     = 7,  ///< Network Data TLV
+        kIp6AddressList  = 8,  ///< Ip6 Address List TLV
+        kMacCounters     = 9,  ///< Mac Counters TLV
+        kBatteryLevel    = 14, ///< Battery Level TLV
+        kSupplyVoltage   = 15, ///< Supply Voltage TLV
+        kChildTable      = 16, ///< Child Table TLV
+        kChannelPages    = 17, ///< Channel Pages TLV
+        kTypeList        = 18, ///< Type List TLV
+        kMaxChildTimeout = 19, ///< Max Child Timeout TLV
+        kInvalid         = 255,
+    };
+
+['Ext Address', 'Rloc16', 'Mode', 'Connectivity', 'Route', 'Leader Data', 'Network Data', ]
+[
+    'DIAG_GET.rsp/ans: 00080eae75c71842a41301021c00',
+    "Ext Address: '0eae75c71842a413'",      // 0
+    'Rloc16: 0x1c00'                        // 1
+    'Mode:',                                // 2
+    '    RxOnWhenIdle: 1',
+    '    SecureDataRequests: 1',
+    '    DeviceType: 1',
+    '    NetworkData: 1'
+// no 3
+    'Connectivity:',            // 4
+    '    ParentPriority: 0',
+    '    LinkQuality3: 0',
+    '    LinkQuality2: 0',
+    '    LinkQuality1: 0',
+    '    LeaderCost: 0',
+    '    IdSequence: 49',
+    '    ActiveRouters: 1',
+    '    SedBufferSize: 1280',
+    '    SedDatagramCount: 1'
+    'Route:',                       // 5
+    '    IdSequence: 53',
+    '    RouteData:',
+    '        - RouteId: 0x07',
+    '          LinkQualityOut: 0',
+    '          LinkQualityIn: 0',
+    '          RouteCost: 1'
+    'Leader Data:',                 // 6
+    '    PartitionId: 0x0d97ca59',
+    '    Weighting: 64',
+    '    DataVersion: 30',
+    '    StableDataVersion: 147',
+    '    LeaderRouterId: 0x07
+    "Network Data: '08040b023f9a03140040fd1100220000000005041c00330007021140'" // 7
+    'IP6 Address List:',                            // 8
+    '    - fd11:22:0:0:eca1:e460:f868:af36',
+    '    - fd11:1111:1122:0:0:ff:fe00:fc00',
+    '    - fd11:1111:1122:0:0:ff:fe00:1c00',
+    '    - fd11:1111:1122:0:6c3:80c9:4b4:69ff',
+    '    - fe80:0:0:0:cae:75c7:1842:a413'
+    'MAC Counters:',                // 9
+    '    IfInUnknownProtos: 0',
+    '    IfInErrors: 0',
+    '    IfOutErrors: 0',
+    '    IfInUcastPkts: 1',
+    '    IfInBroadcastPkts: 0',
+    '    IfInDiscards: 0',
+    '    IfOutUcastPkts: 0',
+    '    IfOutBroadcastPkts: 59',
+    '    IfOutDiscards: 0'
+
+    'Child Table:'   // 16,
+
+    "Channel Pages: '00'"  // 17
+
+]
+

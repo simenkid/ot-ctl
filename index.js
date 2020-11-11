@@ -17,6 +17,7 @@ api.readStatus = function () {
     let data = rsp.data;
 
     return api.readLine('state').then(state => {
+
         data.state = state;
 
         if (state === 'disabled') {
@@ -113,7 +114,12 @@ api.formNetwork = function (config, defaultRoute) {
         prefix = prefix + '/64';
 
     return api.readLine('factoryreset')
+        .then(() => delay(3000))
         .then(() => api.commitActiveDataset(config))
+        .catch(() => {
+            rsp.code = WPAN_CODE.SetFailed;
+            throw new Error(WPAN_MESSAGE[WPAN_CODE.SetFailed]);
+        })
         .then(() => api.readLine(`pskc -p ${passphrase}`))
         .catch(() => {
             rsp.code = WPAN_CODE.SetFailed;
@@ -328,6 +334,12 @@ api.commitActiveDataset = function (config) {
 /********************************************************************************************/
 /** Private Functions                                                                      **/
 /********************************************************************************************/
+function delay(t) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, t);
+    });
+}
+
 function parseObject(lines) {
     let obj = {};
 
@@ -360,7 +372,6 @@ function parseTable(lines) {
     //  lines[0]> | J | Network Name     | Extended PAN     | PAN  | MAC Address      | Ch | dBm | LQI |
     //  lines[1]> +---+------------------+------------------+------+------------------+----+-----+-----+
     //  lines[2]> | 0 | OpenThread       | dead00beef00cafe | ffff | f1d92a82c8d8fe43 | 11 | -20 |   0 |
-console.log(lines);
     let infoList = [];
     let fieldNames = parseTableFields(lines[0]);
 
