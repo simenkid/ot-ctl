@@ -396,32 +396,5 @@ function parseTable(lines) {
     return infoList;
 }
 
-// var lines1 = ['| J | Network Name     | Extended PAN     | PAN  | MAC Address      | Ch | dBm | LQI |',
-// '+---+------------------+------------------+------+------------------+----+-----+-----+',
-// '| 0 | OpenThread       | aead00beef00cafa | f1ff | f1d92a82c8d8fe43 | 11 | -20 |   0 |',
-// '| 1 | OOThread         | bead00beef00cafb | f2ff | f1d92a82c8d8fe44 | 12 | -21 |   1 |',
-// '| 2 | OPThread         | cead00beef00cafc | f3ff | f1d92a82c8d8fe45 | 13 | -22 |   2 |',
-// '| 3 | OEEThread        | dead00beef00cafd | f4ff | f1d92a82c8d8fe46 | 14 | -23 |   3 |',
-// '| 4 | EEEnThread       | eead00beef00cafe | f5ff | f1d92a82c8d8fe47 | 15 | -24 |   4 |'];
-
-// var lines2 = ['| Local Address                 |                  Peer Address                 |',
-// '+-----------------------------------------------+-----------------------------------------------+',
-// '| 0:0:0:0:0:0:0:0:61631                         | 0:0:0:0:0:0:0:0:*                             |',
-// '| 0:0:0:0:0:0:0:0:19788                         | 0:0:0:0:0:0:0:0:*                             |'];
-
-// var lines3 = ['| ID | RLOC16 | Next Hop | Path Cost | LQ In | LQ Out | Age | Extended MAC     |',
-// '+----+--------+----------+-----------+-------+--------+-----+------------------+',
-// '|  3 | 0x0c00 |       63 |         0 |     4 |      2 |   0 | aaa510a4d2ed7d84 |',
-// '|  4 | 0x0c01 |       61 |         1 |     0 |      0 |   1 | baa510a4d2ed7d85 |',
-// '|  5 | 0x0c02 |       61 |         0 |     3 |      0 |   0 | caa510a4d2ed7d86 |',
-// '|  6 | 0x0c03 |       60 |         1 |     0 |      2 |   0 | daa510a4d2ed7d87 |'];
-
-// var t1 = parseTable(lines1);
-// var t2 = parseTable(lines2);
-// var t3 = parseTable(lines3);
-// console.log(t1);
-// console.log(t2);
-// console.log(t3);
-
 module.exports = api;
 

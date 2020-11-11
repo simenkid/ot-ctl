@@ -20,13 +20,73 @@
         kInvalid         = 255,
     };
 
-['Ext Address', 'Rloc16', 'Mode', 'Connectivity', 'Route', 'Leader Data', 'Network Data', ]
+{
+    'Ext Address': 0,
+    'Rloc16': 0,
+    'Mode': 1,
+    'Connectivity': 1,
+    'Route': 2,
+    'Leader Data', 'Network Data', 'IP6 Address List', 'MAC Counters', 'Child Table', 'Channel Pages']
+
+if (line.startsWith('DIAG_GET'))
+    return;
+
+
+for (let i = 0; i < lines.length; i++) {
+    let kv = line[i].split(':');
+    let k = kv[0], v = kv[1];
+    let data = {};
+
+    if (props[k] === 1) {
+        data[k] = v;
+    }
+
+    if (props[k] === 2) {
+        data[k] = {};
+    }
+}
+
+if (line.endsWith(':')) {
+    // object, array
+    if (nextLine.startsWith('    ')) {
+        // object
+    } else if (nextLine.startsWith('    -')) {
+        //
+    }
+} else {
+
+}
+
+let result = {};
+let hitObj = null;
+
+lines.forEach((line, i) => {
+    if (!line.startsWith('    ')) {
+        let kv = line.split(':');
+        let k = kv[0].trim();
+        let v = kv[1].trim();
+        result[k] = v;
+
+        if (result[k] === '') {
+            hitObj = result[k] = {}; // probably array
+        }
+    } else if {
+
+    }
+});
+
+startsWith('    ') => O_
+startsWith('        -') => A_ or AO_
+  next.startsWith('        -') => A
+  next.startsWith('         ') => AO_
+
+
 [
     'DIAG_GET.rsp/ans: 00080eae75c71842a41301021c00',
     "Ext Address: '0eae75c71842a413'",      // 0
     'Rloc16: 0x1c00'                        // 1
     'Mode:',                                // 2
-    '    RxOnWhenIdle: 1',
+    'O_    RxOnWhenIdle: 1',
     '    SecureDataRequests: 1',
     '    DeviceType: 1',
     '    NetworkData: 1'
@@ -42,9 +102,9 @@
     '    SedBufferSize: 1280',
     '    SedDatagramCount: 1'
     'Route:',                       // 5
-    '    IdSequence: 53',
-    '    RouteData:',
-    '        - RouteId: 0x07',
+    'O_    IdSequence: 53',
+    'O_    RouteData:',
+    'AO_        - RouteId: 0x07',
     '          LinkQualityOut: 0',
     '          LinkQualityIn: 0',
     '          RouteCost: 1'
@@ -56,7 +116,7 @@
     '    LeaderRouterId: 0x07
     "Network Data: '08040b023f9a03140040fd1100220000000005041c00330007021140'" // 7
     'IP6 Address List:',                            // 8
-    '    - fd11:22:0:0:eca1:e460:f868:af36',
+    'A_    - fd11:22:0:0:eca1:e460:f868:af36',
     '    - fd11:1111:1122:0:0:ff:fe00:fc00',
     '    - fd11:1111:1122:0:0:ff:fe00:1c00',
     '    - fd11:1111:1122:0:6c3:80c9:4b4:69ff',
