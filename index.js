@@ -294,10 +294,41 @@ api.joinNetwork = function (config, defaultRoute) {
         .then(() => rsp);
 };
 
+api.readRouterTable = function () {
+    return api.readTable('router table');
+};
+
+api.readChildTable = function () {
+    return api.readTable('child table');
+};
+
+api.readChildTableByRloc16 = function (rloc16) {
+    return api.networkDiagnosticGetByRloc16(rloc16, '16').then(rsp => rsp['Child Table']); // TBD: should be an array
+};
+
 api.networkDiagnosticGet = function (addr, type) {
     return api.readLines(`networkdiagnostic get ${addr} ${type}`)
         .then(lines => parseDiagResponse(lines));
 };
+
+api.networkDiagnosticGetByRloc16 = function (rloc16, type) {
+    if (rloc16.startsWith('0x') || rloc16.startsWith('0X'))
+        rloc16 = rloc16.slice(2);
+    
+    return api.readLines('dataset active')
+        .then(lines => parseObject(lines))
+        .then((dataset) => {
+            let meshLocalPrefix = dataset["Mesh Local Prefix"] || '';   // Mesh Local Prefix: fdb9:5fb:c53c:b4f5/64
+            return meshLocalPrefix.split('/')[0];
+        })
+        .then(localPrefix => {
+            let MLATokenLocator = ':0:ff:fe00:';
+            let mla = localPrefix + MLATokenLocator + rloc16;
+
+            return api.readLines(`networkdiagnostic get ${mla} ${type}`);
+        }).then(lines => parseDiagResponse(lines));
+};
+
 /********************************************************************************************/
 /** Protected Methods                                                                      **/
 /********************************************************************************************/
@@ -409,7 +440,7 @@ function parseDiagResponse(lines) {
         let nextLine = lines[i + 1] || '';
         let kvp = line.split(':');
         let key = kvp[0].trim();
-        let value = kvp[1].trim();
+        let value = kvp[1].trim().replace(/\'/g, '');   // take off ' and '
     
         if (value === '') {
             // find cusor

@@ -9,9 +9,14 @@ var ot = require('./index');
 //.then(data => console.log(data))
 //ot.getWpanServiceStatus()
 //.then(data => console.log(data))
-//ot.readLines('networkdiagnostic get fd11:1111:1122:0:0:ff:fe00:fc00 0 1 2 3 4 5 6')
+//ot.readLines('networkdiagnostic get fdbf:8b1c:e59e:c090:0:ff:fe00:fc00 0 1 2 3 4 5 6 7')
 //ot.readLines('networkdiagnostic get ff02::1 0 1 2 3 4 5 6')
-ot.networkDiagnosticGet('ff02::1', '12 13 14 15 16')
+//ot.networkDiagnosticGet('fdbf:8b1c:e59e:c090:0:ff:fe00:4400', '0 1 2 3 4 5 6 7')
+//ot.networkDiagnosticGetByRloc16('0x4400', '0 1 2 3 4 5 6 7')
+//ot.readRouterTable()
+//ot.readChildTable()
+ot.readChildTableByRloc16('0x4400')
+
 /*
 .then(() => {
   return ot.formNetwork({
