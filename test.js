@@ -10,7 +10,8 @@ var ot = require('./index');
 //ot.getWpanServiceStatus()
 //.then(data => console.log(data))
 //ot.readLines('networkdiagnostic get fd11:1111:1122:0:0:ff:fe00:fc00 0 1 2 3 4 5 6')
-//ot.readLines('networkdiagnostic get ff02::1 0 1')
+//ot.readLines('networkdiagnostic get ff02::1 0 1 2 3 4 5 6')
+ot.networkDiagnosticGet('ff02::1', '12 13 14 15 16')
 /*
 .then(() => {
   return ot.formNetwork({
@@ -27,8 +28,8 @@ var ot = require('./index');
 //.then(() => ot.readStatus())
 
 //ot.readLines('state')
-//.then(data => console.log(data));
+.then(data => console.log(data));
 
-var x = 'Mode:';
-x = x.split(':');
-console.log(x);
+// var x = 'Mode:';
+// x = x.split(':');
+// console.log(x);

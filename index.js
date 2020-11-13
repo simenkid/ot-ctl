@@ -294,6 +294,10 @@ api.joinNetwork = function (config, defaultRoute) {
         .then(() => rsp);
 };
 
+api.networkDiagnosticGet = function (addr, type) {
+    return api.readLines(`networkdiagnostic get ${addr} ${type}`)
+        .then(lines => parseDiagResponse(lines));
+};
 /********************************************************************************************/
 /** Protected Methods                                                                      **/
 /********************************************************************************************/
@@ -394,6 +398,60 @@ function parseTable(lines) {
     }
 
     return infoList;
+}
+
+function parseDiagResponse(lines) {
+    let result = {};
+    let cursor = result;
+    
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        let nextLine = lines[i + 1] || '';
+        let kvp = line.split(':');
+        let key = kvp[0].trim();
+        let value = kvp[1].trim();
+    
+        if (value === '') {
+            // find cusor
+            if (!line.startsWith('    ')) {
+    
+                if (nextLine.trim().startsWith('-'))
+                    cursor = result[key] = result[key] || [];
+                else
+                    cursor = result[key] = result[key] || {};
+    
+            } else {
+                
+                if (nextLine.trim().startsWith('-'))
+                    cursor = cursor[key] = cursor[key] || [];
+                else
+                    cursor = cursor[key] = cursor[key] || {};
+            }
+    
+        } else if (value !== '') {  // kvp
+            if (kvp.length === 2) {
+                if (Array.isArray(cursor)) {
+                    let obj = null;
+    
+                    if (key.startsWith('- ')) {
+                        obj = {};
+                        obj[key.replace('- ', '')] = value;
+                        
+                    } else {
+                        obj = cursor.pop() || {};
+                        obj[key] = value;
+                    }
+                    cursor.push(obj);
+    
+                } else {
+                    cursor[key] = value;
+                }
+            } else if (key.startsWith('-'))
+                cursor.push(line.trim().replace('- ', ''));
+        }
+    }
+
+    return result;
 }
 
 module.exports = api;
